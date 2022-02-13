@@ -4,9 +4,12 @@ import { Task } from './entities/task.entity';
 
 @Injectable()
 export class TasksService {
-    private tasks: Task[] = [ {id:0, name: 'Marciano'} ];
+    private tasks: Task[] = [ {id:0, name: 'Marciano'}, {id:1, name: 'Amalia'}, {id:2, name: 'Lucas'} ];
 
-    findAll(): Task[] {
+    findAll(name?: string): Task[] {
+        if (name) {
+            return this.tasks.filter(task => task.name === name)
+        }
         return this.tasks;
     }
 
