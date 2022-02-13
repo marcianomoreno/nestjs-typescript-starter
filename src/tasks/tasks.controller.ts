@@ -1,7 +1,7 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './dto/create-task.dto';
-import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { ApiCreatedResponse, ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { Task } from './entities/task.entity';
 
 @ApiTags('tasks')
@@ -10,9 +10,10 @@ export class TasksController {
     constructor(private tasksService: TasksService) {}
 
     @ApiOkResponse({type: Task, isArray: true})
+    @ApiQuery({name: 'name', required: false})
     @Get()
-    getTasks():any {
-        return this.tasksService.findAll();
+    getTasks(@Query('name') name: string):any {
+        return this.tasksService.findAll(name);
     }
 
     @ApiOkResponse({type: Task, isArray: false, description: 'Returns a task by id'})
