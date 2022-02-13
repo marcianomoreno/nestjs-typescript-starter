@@ -15,7 +15,7 @@ export class TasksController {
         return this.tasksService.findAll();
     }
 
-    @ApiOkResponse({type: Task, isArray: false})
+    @ApiOkResponse({type: Task, isArray: false, description: 'Returns a task by id'})
     @Get(':id')
     getTaskById(@Param('id') id: string): any {
         return this.tasksService.findById(Number(id));
