@@ -1,4 +1,4 @@
-import { Body, Controller, Get, NotFoundException, Param, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, NotFoundException, Param, ParseIntPipe, Post, Query } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
@@ -19,8 +19,8 @@ export class TasksController {
     @ApiOkResponse({type: Task, isArray: false, description: 'Returns a task by id'})
     @ApiNotFoundResponse()
     @Get(':id')
-    getTaskById(@Param('id') id: string): any {
-        const user = this.tasksService.findById(Number(id));
+    getTaskById(@Param('id', ParseIntPipe) id: number): any {
+        const user = this.tasksService.findById(id);
         if (!user) {
             throw new NotFoundException();
         }
