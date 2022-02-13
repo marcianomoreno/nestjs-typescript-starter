@@ -10,7 +10,7 @@ export class TasksController {
     @Get(':id')
     getTaskById(@Param('id') id: string): any {
         return {
-            id
+            id: Number(id)
         }
     }
 }
